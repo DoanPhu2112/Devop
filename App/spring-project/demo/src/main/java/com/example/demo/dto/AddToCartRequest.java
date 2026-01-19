@@ -7,9 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuyEventRequest {
-    private String itemId;
+public class AddToCartRequest {
+    private String id;
     private double price;
+    private String name;
     private Long timestamp;
 }
 

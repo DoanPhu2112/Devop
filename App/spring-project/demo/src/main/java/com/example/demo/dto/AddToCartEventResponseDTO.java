@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BuyEventResponseDTO {
+public class AddToCartEventResponseDTO {
     private String eventId;
     private String streamName;
     private Long position;
