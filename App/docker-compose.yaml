@@ -1,0 +1,24 @@
+services: 
+  frontend: # Service name
+    build: ./vue-project
+    image: frontend
+    expose:
+      - "5173"
+    ports:
+      - "3001:5173"
+    depends_on:
+      - backend # On service name
+  backend: # Service name
+    build: ./spring-project
+    image: backend
+    expose:
+      - "8080"
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    external:
+      name: infra_network

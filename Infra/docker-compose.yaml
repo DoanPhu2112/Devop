@@ -1,0 +1,78 @@
+services: 
+  mongodb: 
+    image: mongo:7.0       
+    container_name: mongo_server
+    volumes: 
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"  
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=phudvq
+      - MONGO_INITDB_ROOT_PASSWORD=Ph12345678!
+    networks: 
+      - infranet
+
+  minio:
+    image: minio/minio:RELEASE.2025-09-07T16-13-09Z-cpuv1
+    container_name: minio_server
+    environment:
+      - MINIO_ROOT_USER=phudvq
+      - MINIO_ROOT_PASSWORD=Ph12345678!
+    networks: 
+      - infranet
+    volumes:
+      - minio-data:/data
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    command: server /data --console-address ":9001"
+
+  kurrentdb.db:
+    image: docker.kurrent.io/kurrent-latest/kurrentdb:latest
+    environment:
+      - KURRENTDB_CLUSTER_SIZE=1
+      - KURRENTDB_RUN_PROJECTIONS=All
+      - KURRENTDB_START_STANDARD_PROJECTIONS=true
+      - KURRENTDB_NODE_PORT:=2113
+      - KURRENTDB_INSECURE=true
+      - KURRENTDB_ENABLE_ATOM_PUB_OVER_HTTP=true
+    ports:
+      - "2113:2113"
+    volumes:
+      - type: volume
+        source: kurrentdb-volume-data
+        target: /var/lib/kurrentdb
+      - type: volume
+        source: kurrentdb-volume-logs
+        target: /var/log/kurrentdb
+
+  keycloak_web:
+    image: quay.io/keycloak/keycloak:latest
+    environment:
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=Admin123!
+      - KC_HEALTH_ENABLED=true
+      - KC_METRICS_ENABLED=true
+    command: start-dev
+    ports:
+      - "8080:8080"
+    networks:
+      - infranet
+  keycloak_db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=keycloak
+      - POSTGRES_USER=keycloak
+      - POSTGRES_PASSWORD=Keycloak
+
+networks:
+  infranet:
+    name: infra_network
+
+volumes:
+  mongo-data:
+  minio-data:
+  kurrentdb-volume-data:
+  kurrentdb-volume-logs:
