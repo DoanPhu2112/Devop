@@ -9,6 +9,7 @@ import com.eventstore.dbclient.WriteResult;
 import com.example.demo.dto.AddToCartRequest;
 import com.example.demo.dto.AddToCartEventResponseDTO;
 import com.example.demo.dto.EventDTO;
+import com.example.demo.exception.ResourceNotFoundException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 
 @Service
 @AllArgsConstructor
@@ -32,11 +34,11 @@ public class KurrentDbServiceImpl implements KurrentDbService {
     public AddToCartEventResponseDTO appendAddToCartEvent(AddToCartRequest request) {
         try {
             String eventType = "AddToCartEventDIY"; // aka Event name
-            String eventId = UUID.randomUUID().toString() + "-" + request.getId();
+            UUID eventId = UUID.randomUUID();
             long createdEpoch = Instant.now().toEpochMilli();
 
             EventData eventData = EventData.builderAsJson(eventType, request)
-                    .eventId(UUID.fromString(eventId))
+                    .eventId(eventId)
                     .build();
 
             WriteResult result = client.appendToStream(STREAM_NAME, eventData)
@@ -44,20 +46,32 @@ public class KurrentDbServiceImpl implements KurrentDbService {
 
             System.out.println(result.toString());
 
-            return new AddToCartEventResponseDTO(eventId, STREAM_NAME, createdEpoch);
+            return new AddToCartEventResponseDTO(eventId.toString(), STREAM_NAME, createdEpoch);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
     public void removeItemFromCart(String eventId) {
-        String eventType = "RemoveFromCartEventDIY"; // aka Event name
-        
-        client.appendToStream(STREAM_NAME, 
-            EventData.builderAsJson(eventType, "")
-            .eventId(UUID.fromString(UUID.randomUUID().toString() + "-" + eventId))
-            .build()
-        );
+        try{
+            ReadResult eventStream = client.readStream(STREAM_NAME, ReadStreamOptions.get().fromStart()).get();
+
+            for(ResolvedEvent re: eventStream.getEvents()){
+                if(!re.getEvent().getEventId().toString().equals(eventId)){
+                    throw new ResourceNotFoundException("Event does not exist.");
+                }
+            }
+
+            String eventType = "RemoveFromCartEventDIY"; // aka Event name
+
+            client.appendToStream(STREAM_NAME,
+                    EventData.builderAsJson(eventType, "")
+                            .eventId(UUID.randomUUID())
+                            .build()
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -68,6 +82,9 @@ public class KurrentDbServiceImpl implements KurrentDbService {
             List<EventDTO> events = new ArrayList<>();
             for (ResolvedEvent re : eventStream.getEvents()) {
                 String eventDataJson = new String(re.getEvent().getEventData(), StandardCharsets.UTF_8);
+                if (eventDataJson.equals("")) {
+                    continue;
+                }
                 String eventType = re.getEvent().getEventType();
                 String eventId = re.getEvent().getEventId().toString();
                 long createdEpochMillis = re.getEvent().getCreated().toEpochMilli();
@@ -90,9 +107,8 @@ public class KurrentDbServiceImpl implements KurrentDbService {
     @Override
     public void buyItem(AddToCartRequest request) {
         String eventType = "BuyItemEventDIY"; // aka Event name
-        String eventId = UUID.randomUUID().toString() + "-" + request.getId();
         EventData eventData = EventData.builderAsJson(eventType, request)
-                .eventId(UUID.fromString(eventId))
+                .eventId(UUID.randomUUID())
                 .build();
 
         try {
