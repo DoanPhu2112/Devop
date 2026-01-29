@@ -1,0 +1,315 @@
+{
+  "info": {
+    "_postman_id": "loan-poc-collection",
+    "name": "Loan POC - KurrentDB Publisher/Subscriber",
+    "description": "POC collection for testing publisher (demo) → KurrentDB → subscriber (loan-project)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health Checks",
+      "item": [
+        {
+          "name": "Demo Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9992/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["health"]
+            },
+            "description": "Check if demo service (publisher) is running"
+          },
+          "response": []
+        },
+        {
+          "name": "Loan-Project Service Health",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9993/health",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9993",
+              "path": ["health"]
+            },
+            "description": "Check if loan-project service (subscriber) is running"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Publish Events",
+      "item": [
+        {
+          "name": "Publish Login Event - Alice (Prime)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\":\"alice-prime\",\"username\":\"Alice Prime\",\"eventType\":\"LOGIN\",\"occurredAt\":{{timestamp}}}"
+            },
+            "url": {
+              "raw": "http://localhost:9992/kurrentdb/auth-events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["kurrentdb", "auth-events"]
+            },
+            "description": "Publish LOGIN event for Prime user (score/income hardcoded in subscriber)"
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Signup Event - Bob (Fair)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\":\"bob-fair\",\"username\":\"Bob Fair\",\"eventType\":\"SIGNUP\",\"occurredAt\":{{timestamp}}}"
+            },
+            "url": {
+              "raw": "http://localhost:9992/kurrentdb/auth-events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["kurrentdb", "auth-events"]
+            },
+            "description": "Publish SIGNUP event for Fair user (score/income hardcoded in subscriber)"
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Login Event - Charlie (High-Risk)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\":\"charlie-risk\",\"username\":\"Charlie Risk\",\"eventType\":\"LOGIN\",\"occurredAt\":{{timestamp}}}"
+            },
+            "url": {
+              "raw": "http://localhost:9992/kurrentdb/auth-events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["kurrentdb", "auth-events"]
+            },
+            "description": "Publish LOGIN event for High-Risk user (score/income hardcoded in subscriber)"
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Logout Event - Alice",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\":\"user123\",\"username\":\"alice\",\"eventType\":\"LOGOUT\",\"occurredAt\":{{timestamp}}}"
+            },
+            "url": {
+              "raw": "http://localhost:9992/kurrentdb/auth-events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["kurrentdb", "auth-events"]
+            },
+            "description": "Publish LOGOUT event (approval should be denied even with high score)"
+          },
+          "response": []
+        },
+        {
+          "name": "Publish Password Update Event - Bob",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\"userId\":\"user456\",\"username\":\"bob\",\"eventType\":\"PASSWORD_UPDATE\",\"occurredAt\":{{timestamp}}}"
+            },
+            "url": {
+              "raw": "http://localhost:9992/kurrentdb/auth-events",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["kurrentdb", "auth-events"]
+            },
+            "description": "Publish PASSWORD_UPDATE event (triggers security review)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Query Loan Status (Demo)",
+      "item": [
+        {
+          "name": "List All Loan Statuses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9992/loan/statuses",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["loan", "statuses"]
+            },
+            "description": "Get all loan statuses from demo service"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loan Status - Alice",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9992/loan/statuses/alice-prime",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["loan", "statuses", "alice-prime"]
+            },
+            "description": "Get loan status for specific user (Alice)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loan Status - Bob",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9992/loan/statuses/bob-fair",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["loan", "statuses", "bob-fair"]
+            },
+            "description": "Get loan status for specific user (Bob)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Loan Status - Charlie",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9992/loan/statuses/charlie-risk",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9992",
+              "path": ["loan", "statuses", "charlie-risk"]
+            },
+            "description": "Get loan status for specific user (Charlie)"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Query Credit Decisions (Loan-Project)",
+      "item": [
+        {
+          "name": "List All Credit Decisions",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9993/loan/credit-decisions",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9993",
+              "path": ["loan", "credit-decisions"]
+            },
+            "description": "Get all credit decisions from loan-project service (subscriber)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Credit Decision - Alice (Prime)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9993/loan/credit-decisions/alice-prime",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9993",
+              "path": ["loan", "credit-decisions", "alice-prime"]
+            },
+            "description": "Get credit decision for Alice (should show Prime band, approved)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Credit Decision - Bob (Fair)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9993/loan/credit-decisions/bob-fair",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9993",
+              "path": ["loan", "credit-decisions", "bob-fair"]
+            },
+            "description": "Get credit decision for Bob (should show Fair band, approved)"
+          },
+          "response": []
+        },
+        {
+          "name": "Get Credit Decision - Charlie (High-Risk)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:9993/loan/credit-decisions/charlie-risk",
+              "protocol": "http",
+              "host": ["localhost"],
+              "port": "9993",
+              "path": ["loan", "credit-decisions", "charlie-risk"]
+            },
+            "description": "Get credit decision for Charlie (should show High-Risk band, declined)"
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

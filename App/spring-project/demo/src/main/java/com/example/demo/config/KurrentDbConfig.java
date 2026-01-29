@@ -1,7 +1,9 @@
 package com.example.demo.config;
 
 import com.eventstore.dbclient.EventStoreDBClient;
+import com.eventstore.dbclient.EventStoreDBClientSettings;
 import com.eventstore.dbclient.EventStoreDBConnectionString;
+import com.eventstore.dbclient.EventStoreDBPersistentSubscriptionsClient;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -15,8 +17,17 @@ public class KurrentDbConfig {
     private String connectionString;
 
     @Bean
-    public EventStoreDBClient eventStoreDBClient() {
-        EventStoreDBClient client = EventStoreDBClient.create(EventStoreDBConnectionString.parseOrThrow(connectionString));
-        return client;
+    public EventStoreDBClientSettings eventStoreDBClientSettings() {
+        return EventStoreDBConnectionString.parseOrThrow(connectionString);
+    }
+
+    @Bean
+    public EventStoreDBClient eventStoreDBClient(EventStoreDBClientSettings settings) {
+        return EventStoreDBClient.create(settings);
+    }
+
+    @Bean
+    public EventStoreDBPersistentSubscriptionsClient eventStoreDBPersistentSubscriptionsClient(EventStoreDBClientSettings settings) {
+        return EventStoreDBPersistentSubscriptionsClient.create(settings);
     }
 }

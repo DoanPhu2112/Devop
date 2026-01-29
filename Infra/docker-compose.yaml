@@ -1,15 +1,15 @@
-services: 
-  mongodb: 
-    image: mongo:7.0       
+services:
+  mongodb:
+    image: mongo:7.0
     container_name: mongo_server
-    volumes: 
+    volumes:
       - mongo-data:/data/db
     ports:
-      - "27017:27017"  
+      - "27017:27017"
     environment:
       - MONGO_INITDB_ROOT_USERNAME=phudvq
       - MONGO_INITDB_ROOT_PASSWORD=Ph12345678!
-    networks: 
+    networks:
       - infranet
 
   minio:
@@ -18,7 +18,7 @@ services:
     environment:
       - MINIO_ROOT_USER=phudvq
       - MINIO_ROOT_PASSWORD=Ph12345678!
-    networks: 
+    networks:
       - infranet
     volumes:
       - minio-data:/data
@@ -76,3 +76,4 @@ volumes:
   minio-data:
   kurrentdb-volume-data:
   kurrentdb-volume-logs:
+  postgres_data:
