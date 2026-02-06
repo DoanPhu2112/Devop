@@ -34,7 +34,7 @@
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <dependency>
@@ -47,11 +47,6 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -79,6 +74,22 @@
             <artifactId>db-client-java</artifactId>
             <version>5.3.0</version>
         </dependency>
+
+        <!-- Explicitly add the JSON starter so Spring Boot's Jackson auto-configuration (ObjectMapper bean)
+             is available and recognized by the IDE. spring-boot-starter-web transitively includes this,
+             but adding explicitly helps IDEs and ensures the auto-config is present. -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-json</artifactId>
+        </dependency>
+
+        <!-- Keep jackson-databind (2.x) to satisfy existing imports referencing com.fasterxml.jackson.databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- jackson-databind removed: use Spring Boot's jackson (tools.jackson.core:jackson-databind 3.x) -->
     </dependencies>
 
     <build>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a65233f3-bb43-4b46-9689-fa1de04a1723" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/App/spring-project/demo/src/main/java/com/example/demo/config/KeycloakConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/App/spring-project/demo/src/main/java/com/example/demo/config/KeycloakConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/spring-project/demo/src/main/java/com/example/demo/service/UserAuthPersistentSubscription.java" beforeDir="false" afterPath="$PROJECT_DIR$/App/spring-project/demo/src/main/java/com/example/demo/service/UserAuthPersistentSubscription.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/spring-project/demo/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/App/spring-project/demo/src/main/resources/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/playwright.config.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/App.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-add-to-cart/use-kurrentdb-add-to-cart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-add-to-cart/use-kurrentdb-add-to-cart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-buy/use-kurrentdb-buy.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-buy/use-kurrentdb-buy.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-remove-from-cart/use-kurrentdb-remove-from-cart.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/api/kurrentdb-remove-from-cart/use-kurrentdb-remove-from-cart.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/assets/base.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/assets/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/assets/main.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/components/ServiceList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/components/ServiceList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/keycloak.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/keycloak.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/App/vue-project/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/router/index.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/App/vue-project/src/stores/counter.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/BEFORE_AFTER_COMPARISON.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REFACTORING_CHECKLIST.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REFACTORING_DOCUMENTATION_INDEX.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/REFACTORING_SUMMARY.md" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="391EyMdbFA1msOHwQWVY1qWjTbD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "git-widget-placeholder": "feat/pub-sub-poc",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/phu/Projects/Devop/App/spring-project/demo",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "prettierjs.PrettierConfiguration.Package": "/home/phu/Projects/Devop/App/vue-project/node_modules/prettier",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a65233f3-bb43-4b46-9689-fa1de04a1723" name="Changes" comment="" />
+      <created>1769855430338</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1769855430338</updated>
+      <workItem from="1769855438698" duration="53000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

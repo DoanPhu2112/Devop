@@ -9,6 +9,7 @@ import com.eventstore.dbclient.WriteResult;
 import com.example.demo.dto.AddToCartRequest;
 import com.example.demo.dto.AddToCartEventResponseDTO;
 import com.example.demo.dto.EventDTO;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -108,5 +109,12 @@ public class KurrentDbServiceImpl implements KurrentDbService {
             buyItem(request);
         }
     }
-    
+
+
+    @Override
+    public void appendAuthenticateEvent(JsonNode user) {
+        EventData eventData = EventData.builderAsJson("AuthenticateEventDIY", user)
+                .eventId(UUID.randomUUID())
+                .build();
+    }
 }

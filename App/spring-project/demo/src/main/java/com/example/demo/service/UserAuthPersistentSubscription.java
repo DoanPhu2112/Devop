@@ -24,12 +24,12 @@ import java.util.concurrent.ExecutionException;
 @Slf4j
 @RequiredArgsConstructor
 public class UserAuthPersistentSubscription {
-    private static final String STREAM_NAME = "My_Stream_Diy";
-    private static final String GROUP_NAME = "My_Group_Diy";
+    private static final String STREAM_NAME = "Stream_DIY";
+    private static final String GROUP_NAME = "Group_DIY";
 
     private final EventStoreDBPersistentSubscriptionsClient persistentSubscriptionsClient;
     private final LoanTrackingService loanTrackingService;
-    private final ObjectMapper objectMapper;
+//    private final ObjectMapper objectMapper;
 
     @PostConstruct
     public void start() {
@@ -98,25 +98,26 @@ public class UserAuthPersistentSubscription {
     }
 
     private UserAuthEvent toUserAuthEvent(ResolvedEvent event) throws IOException {
-        UserAuthEvent parsed = objectMapper.readValue(event.getEvent().getEventData(), UserAuthEvent.class);
-
-        UserAuthEventType type = parsed.safeEventType();
-        if (type == UserAuthEventType.UNKNOWN) {
-            type = inferTypeFromName(event.getEvent().getEventType());
-        }
-
-        long occurredAt = parsed.getOccurredAt() != null
-                ? parsed.getOccurredAt()
-                : event.getEvent().getCreated().toEpochMilli();
-
-        if (parsed.getEventId() == null) {
-            parsed.setEventId(event.getEvent().getEventId().toString());
-        }
-
-        parsed.setEventType(type);
-        parsed.setOccurredAt(occurredAt);
-
-        return parsed;
+        return null;
+//        UserAuthEvent parsed = objectMapper.readValue(event.getEvent().getEventData(), UserAuthEvent.class);
+//
+//        UserAuthEventType type = parsed.safeEventType();
+//        if (type == UserAuthEventType.UNKNOWN) {
+//            type = inferTypeFromName(event.getEvent().getEventType());
+//        }
+//
+//        long occurredAt = parsed.getOccurredAt() != null
+//                ? parsed.getOccurredAt()
+//                : event.getEvent().getCreated().toEpochMilli();
+//
+//        if (parsed.getEventId() == null) {
+//            parsed.setEventId(event.getEvent().getEventId().toString());
+//        }
+//
+//        parsed.setEventType(type);
+//        parsed.setOccurredAt(occurredAt);
+//
+//        return parsed;
     }
 
     private UserAuthEventType inferTypeFromName(String eventTypeName) {

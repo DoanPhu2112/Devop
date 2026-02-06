@@ -53,7 +53,12 @@ services:
       - KEYCLOAK_ADMIN_PASSWORD=Admin123!
       - KC_HEALTH_ENABLED=true
       - KC_METRICS_ENABLED=true
+      - KC_HTTP_ENABLED=true
+      - KC_HOSTNAME_STRICT=false
+      - KC_HOSTNAME_STRICT_HTTPS=false
     command: start-dev
+    volumes:
+        - ../App/spring-project/demo/src/main/resources/META-INF/providers/sample-event-listener.jar:/opt/keycloak/providers/sample-event-listener.jar
     ports:
       - "8080:8080"
     networks:

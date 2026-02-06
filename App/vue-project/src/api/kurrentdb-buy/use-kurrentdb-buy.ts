@@ -1,4 +1,4 @@
-import { BuyItemEventRequest, BuyAllItemsEventRequest, kurrentdbBuyItem, kurrentdbBuyAllItems } from "./kurrentdb-buy";
+import { type BuyItemEventRequest, type BuyAllItemsEventRequest, kurrentdbBuyItem, kurrentdbBuyAllItems } from "./kurrentdb-buy";
 import { useMutation } from "@tanstack/vue-query";
 
 export function useKurrentdbBuyItem() {

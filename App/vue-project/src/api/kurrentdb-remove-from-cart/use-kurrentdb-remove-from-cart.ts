@@ -1,4 +1,4 @@
-import { RemoveFromCartEventRequest, kurrentdbRemoveFromCart } from "./kurrentdb-remove-from-cart";
+import { type RemoveFromCartEventRequest, kurrentdbRemoveFromCart } from "./kurrentdb-remove-from-cart";
 import { useMutation } from "@tanstack/vue-query";
 
 export function useKurrentdbRemoveFromCart() {

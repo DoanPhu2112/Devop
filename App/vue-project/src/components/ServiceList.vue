@@ -60,25 +60,23 @@
     </div>
 
     <div class="">
-      <h3>Keycloak</h3>
+      <KeycloakSection />
     </div>
 
     <div class="">
       <h3>MongoDB</h3>
     </div>
   </div>
-  <!-- <div class="service-list">
-        <button class="service-button" @click="handleClick()">Oracle</button>
-    </div> -->
+
 </template>
 
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
-// import { serviceApi } from '@/api'
 import { useMinioUpload } from '@/api/minio-upload/use-minio-upload'
 import { useKurrentdbAddToCart } from '@/api/kurrentdb-add-to-cart/use-kurrentdb-add-to-cart'
 import { useKurrentdbRemoveFromCart } from '@/api/kurrentdb-remove-from-cart/use-kurrentdb-remove-from-cart'
 import { useKurrentdbBuyItem, useKurrentdbBuyAllItems } from '@/api/kurrentdb-buy/use-kurrentdb-buy'
+import KeycloakSection from './KeycloakSection.vue'
 
 const isDragging = ref(false)
 
@@ -88,11 +86,6 @@ const { mutateAsync: addToCart } = useKurrentdbAddToCart()
 const { mutateAsync: removeFromCart } = useKurrentdbRemoveFromCart()
 const { mutateAsync: buyItem } = useKurrentdbBuyItem()
 const { mutateAsync: buyAllItems } = useKurrentdbBuyAllItems()
-
-// function handleClick() {
-//     alert('Service button clicked!');
-//     serviceApi.oracle()
-// }
 
 function handleDragOver(event: DragEvent) {
   event.preventDefault()
