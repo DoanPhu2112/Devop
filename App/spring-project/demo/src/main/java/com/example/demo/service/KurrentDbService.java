@@ -3,7 +3,7 @@ package com.example.demo.service;
 import com.example.demo.dto.AddToCartRequest;
 import com.example.demo.dto.AddToCartEventResponseDTO;
 import com.example.demo.dto.EventDTO;
-import com.fasterxml.jackson.databind.JsonNode;
+import com.example.demo.dto.UserAuthEvent;
 
 import java.util.List;
 
@@ -18,5 +18,5 @@ public interface KurrentDbService {
 
     void buyItems(List<AddToCartRequest> requests);
 
-    void appendAuthenticateEvent(JsonNode user);
+    void appendAuthenticateEvent(UserAuthEvent user);
 }

@@ -10,7 +10,6 @@ import com.eventstore.dbclient.ResolvedEvent;
 import com.eventstore.dbclient.SubscribePersistentSubscriptionOptions;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.example.demo.dto.UserAuthEvent;
-import com.example.demo.dto.UserAuthEventType;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -118,18 +117,6 @@ public class UserAuthPersistentSubscription {
 //        parsed.setOccurredAt(occurredAt);
 //
 //        return parsed;
-    }
-
-    private UserAuthEventType inferTypeFromName(String eventTypeName) {
-        if (eventTypeName == null) {
-            return UserAuthEventType.UNKNOWN;
-        }
-        String normalized = eventTypeName.toUpperCase(Locale.ROOT);
-        if (normalized.contains("LOGIN")) return UserAuthEventType.LOGIN;
-        if (normalized.contains("LOGOUT")) return UserAuthEventType.LOGOUT;
-        if (normalized.contains("SIGNUP") || normalized.contains("REGISTER")) return UserAuthEventType.SIGNUP;
-        if (normalized.contains("PASSWORD")) return UserAuthEventType.PASSWORD_UPDATE;
-        return UserAuthEventType.UNKNOWN;
     }
 
     private boolean isAlreadyExists(Throwable cause) {

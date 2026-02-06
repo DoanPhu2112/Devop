@@ -4,18 +4,28 @@ import org.keycloak.events.EventListenerProvider;
 import org.keycloak.events.Event;
 import org.keycloak.events.admin.AdminEvent;
 
-import java.util.Map;
+import com.example.demo.dto.UserAuthEvent;
+import com.example.demo.service.UserAuthEventPublisher;
 
 public class Provider implements EventListenerProvider {
 
+    private UserAuthEventPublisher userAuthEventPublisher;
+
     @Override
     public void onEvent(Event event) {
-        System.out.println("Event received: " + toString(event));
+        UserAuthEvent userAuthEvent = UserAuthEvent.builder()
+            .eventId(event.getId())
+            .userId(event.getUserId())
+            .username(event.getDetails() != null ? event.getDetails().get("username") : null)
+            .eventType(event.getType())
+            .occurredAt(event.getTime())
+            .build();
+        userAuthEventPublisher.publish(userAuthEvent);
     }
 
     @Override
     public void onEvent(AdminEvent event, boolean b) {
-        System.out.println("Event received: " + event.getRepresentation());
+
     }
 
     @Override
@@ -23,113 +33,113 @@ public class Provider implements EventListenerProvider {
 
     }
 
-    private String toString(Event event) {
+    // private String toString(Event event) {
 
-        StringBuilder sb = new StringBuilder();
+    //     StringBuilder sb = new StringBuilder();
 
-        sb.append("type=");
+    //     sb.append("type=");
 
-        sb.append(event.getType());
+    //     sb.append(event.getType());
 
-        sb.append(", realmId=");
+    //     sb.append(", realmId=");
 
-        sb.append(event.getRealmId());
+    //     sb.append(event.getRealmId());
 
-        sb.append(", clientId=");
+    //     sb.append(", clientId=");
 
-        sb.append(event.getClientId());
+    //     sb.append(event.getClientId());
 
-        sb.append(", userId=");
+    //     sb.append(", userId=");
 
-        sb.append(event.getUserId());
+    //     sb.append(event.getUserId());
 
-        sb.append(", ipAddress=");
+    //     sb.append(", ipAddress=");
 
-        sb.append(event.getIpAddress());
-
-
-        if (event.getError() != null) {
-
-            sb.append(", error=");
-
-            sb.append(event.getError());
-
-        }
+    //     sb.append(event.getIpAddress());
 
 
-        if (event.getDetails() != null) {
+    //     if (event.getError() != null) {
 
-            for (Map.Entry<String, String> e : event.getDetails().entrySet()) {
+    //         sb.append(", error=");
 
-                sb.append(", ");
+    //         sb.append(event.getError());
 
-                sb.append(e.getKey());
-
-                if (e.getValue() == null || e.getValue().indexOf(' ') == -1) {
-
-                    sb.append("=");
-
-                    sb.append(e.getValue());
-
-                } else {
-
-                    sb.append("='");
-
-                    sb.append(e.getValue());
-
-                    sb.append("'");
-
-                }
-
-            }
-
-        }
+    //     }
 
 
-        return sb.toString();
+    //     if (event.getDetails() != null) {
 
-    }
-    private String toString(AdminEvent adminEvent) {
+    //         for (Map.Entry<String, String> e : event.getDetails().entrySet()) {
 
-        StringBuilder sb = new StringBuilder();
+    //             sb.append(", ");
 
+    //             sb.append(e.getKey());
 
-        sb.append("operationType=");
+    //             if (e.getValue() == null || e.getValue().indexOf(' ') == -1) {
 
-        sb.append(adminEvent.getOperationType());
+    //                 sb.append("=");
 
-        sb.append(", realmId=");
+    //                 sb.append(e.getValue());
 
-        sb.append(adminEvent.getAuthDetails().getRealmId());
+    //             } else {
 
-        sb.append(", clientId=");
+    //                 sb.append("='");
 
-        sb.append(adminEvent.getAuthDetails().getClientId());
+    //                 sb.append(e.getValue());
 
-        sb.append(", userId=");
+    //                 sb.append("'");
 
-        sb.append(adminEvent.getAuthDetails().getUserId());
+    //             }
 
-        sb.append(", ipAddress=");
+    //         }
 
-        sb.append(adminEvent.getAuthDetails().getIpAddress());
-
-        sb.append(", resourcePath=");
-
-        sb.append(adminEvent.getResourcePath());
+    //     }
 
 
-        if (adminEvent.getError() != null) {
+    //     return sb.toString();
 
-            sb.append(", error=");
+    // }
+    // private String toString(AdminEvent adminEvent) {
 
-            sb.append(adminEvent.getError());
-
-        }
+    //     StringBuilder sb = new StringBuilder();
 
 
-        return sb.toString();
+    //     sb.append("operationType=");
 
-    }
+    //     sb.append(adminEvent.getOperationType());
+
+    //     sb.append(", realmId=");
+
+    //     sb.append(adminEvent.getAuthDetails().getRealmId());
+
+    //     sb.append(", clientId=");
+
+    //     sb.append(adminEvent.getAuthDetails().getClientId());
+
+    //     sb.append(", userId=");
+
+    //     sb.append(adminEvent.getAuthDetails().getUserId());
+
+    //     sb.append(", ipAddress=");
+
+    //     sb.append(adminEvent.getAuthDetails().getIpAddress());
+
+    //     sb.append(", resourcePath=");
+
+    //     sb.append(adminEvent.getResourcePath());
+
+
+    //     if (adminEvent.getError() != null) {
+
+    //         sb.append(", error=");
+
+    //         sb.append(adminEvent.getError());
+
+    //     }
+
+
+    //     return sb.toString();
+
+    // }
 
 }

@@ -4,9 +4,10 @@ import com.eventstore.dbclient.EventData;
 import com.eventstore.dbclient.EventStoreDBClient;
 import com.example.demo.dto.UserAuthEvent;
 import com.example.demo.dto.UserAuthEventResponse;
-import com.example.demo.dto.UserAuthEventType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+
+import org.keycloak.events.EventType;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -23,10 +24,10 @@ public class UserAuthEventPublisher {
     public UserAuthEventResponse publish(UserAuthEvent event) {
         UUID eventId = UUID.randomUUID();
         UserAuthEvent normalized = normalize(event, eventId.toString());
-        String eventType = buildEventType(normalized.safeEventType());
+        EventType eventType = normalized.getEventType();
 
         try {
-            EventData eventData = EventData.builderAsJson(eventType, normalized)
+            EventData eventData = EventData.builderAsJson(eventType.toString(), normalized)
                     .eventId(eventId)
                     .build();
 
@@ -47,12 +48,11 @@ public class UserAuthEventPublisher {
         if (event == null) {
             return UserAuthEvent.builder()
                     .eventId(eventId)
-                    .eventType(UserAuthEventType.UNKNOWN)
                     .occurredAt(Instant.now().toEpochMilli())
                     .build();
         }
 
-        UserAuthEventType type = event.safeEventType();
+        EventType type = event.getEventType();
         Long occurredAt = event.getOccurredAt() != null ? event.getOccurredAt() : Instant.now().toEpochMilli();
 
         return UserAuthEvent.builder()
@@ -64,7 +64,4 @@ public class UserAuthEventPublisher {
                 .build();
     }
 
-    private String buildEventType(UserAuthEventType eventType) {
-        return "KeycloakAuthEvent-" + eventType.name();
-    }
 }
