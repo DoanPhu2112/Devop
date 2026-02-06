@@ -58,7 +58,7 @@ services:
       - KC_HOSTNAME_STRICT_HTTPS=false
     command: start-dev
     volumes:
-        - ../App/spring-project/demo/src/main/resources/META-INF/providers/sample-event-listener.jar:/opt/keycloak/providers/sample-event-listener.jar
+      - ./providers:/opt/keycloak/providers
     ports:
       - "8080:8080"
     networks:
